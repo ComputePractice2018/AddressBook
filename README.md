@@ -59,3 +59,13 @@ Location: /api/addressbook/contacts/1
 ### DELETE /api/addressbook/contacts/1
 
 Ответ: 204 No Content
+
+## Как собрать и запустить
+
+Backend:
+
+```bat
+cd backend
+docker build -f Dockerfile -t addressbook:<имя ветки> .
+docker run --rm --name assressbook -e NAME=<параметр приложения> addressbook:<имя ветки>
+```
