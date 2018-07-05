@@ -11,7 +11,7 @@ func main() {
 	//name := flag.String("name", "Иван", "имя для преветствия")
 	//flag.Parse()
 
-	http.HandleFunc("/api/addressbook/contacts", server.GetContacts)
+	http.HandleFunc("/api/addressbook/contacts", server.ContactsHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
