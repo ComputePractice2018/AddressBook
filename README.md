@@ -49,7 +49,7 @@ Location: /api/addressbook/contacts/1
         "surname": "Фамилия",
         "phone": "+7-999-999-99-99",
         "email": "user@domain.ru",
-        "github" "user"
+        "github": "user"
     }
 ```
 
