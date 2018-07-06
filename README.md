@@ -70,10 +70,10 @@ docker build -f Dockerfile -t addressbookbackend:<имя ветки> .
 docker run --rm --name addressbookbackend -e NAME=<параметр приложения> addressbookbackend:<имя ветки>
 ```
 
-Backend:
+Frontend:
 
 ```bat
-cd backend
-docker build -f Dockerfile -t addressbookfronend:<имя ветки> .
-docker run -d --rm --name addressbookfronend -p 80:80 addressbookfronend:<имя ветки>
+cd frontend
+docker build -f Dockerfile -t addressbookfrontend:<имя ветки> .
+docker run -d --rm --name addressbookfrontend -p 80:80 addressbookfrontend:<имя ветки>
 ```
