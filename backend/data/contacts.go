@@ -1,5 +1,9 @@
 package data
 
+import (
+	"fmt"
+)
+
 // Contact структура для хранения записи адресной книги
 type Contact struct {
 	Name    string `json:"name"`
@@ -9,10 +13,35 @@ type Contact struct {
 	Github  string `json:"github"`
 }
 
-// ContactList хрангимый список контактов
-var ContactList = []Contact{Contact{
-	Name:    "Имя",
-	Surname: "Фамилия",
-	Phone:   "+7-999-999-99-99",
-	Email:   "mail@domain.ru",
-	Github:  "user"}}
+// contacts хранимый список контактов
+var contacts []Contact
+
+// GetContacts возращает список контактов
+func GetContacts() []Contact {
+	return contacts
+}
+
+// AddContact добавляет контакт contact в конец списка и возращает id
+func AddContact(contact Contact) int {
+	id := len(contacts)
+	contacts = append(contacts, contact)
+	return id
+}
+
+// EditContact изменяет контакт c id на contact
+func EditContact(contact Contact, id int) error {
+	if id < 0 || id >= len(contacts) {
+		return fmt.Errorf("incorrect ID")
+	}
+	contacts[id] = contact
+	return nil
+}
+
+// RemoveContact удаляет контакт по id
+func RemoveContact(id int) error {
+	if id < 0 || id >= len(contacts) {
+		return fmt.Errorf("incorrect ID")
+	}
+	contacts = append(contacts[:id], contacts[id+1:]...)
+	return nil
+}
