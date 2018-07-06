@@ -9,22 +9,6 @@ import (
 	"github.com/ComputePractice2018/AddressBook/backend/data"
 )
 
-//ContactsHandler обрабатывает все запросы к /api/addressbook/contacts
-func ContactsHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
-		GetContacts(w, r)
-		return
-	}
-	if r.Method == "POST" {
-		AddContact(w, r)
-		return
-	}
-
-	message := fmt.Sprintf("Method %s is not allowed", r.Method)
-	http.Error(w, message, http.StatusMethodNotAllowed)
-	log.Println(message)
-}
-
 //GetContacts обрабатывает запросы на получение списка контактов
 func GetContacts(w http.ResponseWriter, r *http.Request) {
 	binaryData, err := json.Marshal(data.ContactList)
@@ -58,4 +42,12 @@ func AddContact(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("%+v", contact)
 	w.WriteHeader(http.StatusCreated)
+}
+
+func EditContact(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func DeleteContact(w http.ResponseWriter, r *http.Request) {
+
 }
