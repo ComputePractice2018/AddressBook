@@ -66,6 +66,14 @@ Backend:
 
 ```bat
 cd backend
-docker build -f Dockerfile -t addressbook:<имя ветки> .
-docker run --rm --name assressbook -e NAME=<параметр приложения> addressbook:<имя ветки>
+docker build -f Dockerfile -t addressbookbackend:<имя ветки> .
+docker run --rm --name addressbookbackend -e NAME=<параметр приложения> addressbookbackend:<имя ветки>
+```
+
+Backend:
+
+```bat
+cd backend
+docker build -f Dockerfile -t addressbookfronend:<имя ветки> .
+docker run -d --rm --name addressbookfronend -p 80:80 addressbookfronend:<имя ветки>
 ```
