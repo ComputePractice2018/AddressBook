@@ -13,35 +13,50 @@ type Contact struct {
 	Github  string `json:"github"`
 }
 
-// contacts хранимый список контактов
-var contacts []Contact
+// ContactList структрура для списка записей адресной книги
+type ContactList struct {
+	contacts []Contact
+}
+
+// Editable интерфейс для работы со списком записей
+type Editable interface {
+	GetContacts() []Contact
+	AddContact(contact Contact) int
+	EditContact(contact Contact, id int) error
+	RemoveContact(id int) error
+}
+
+// NewContactList конструктор списка контактов
+func NewContactList() *ContactList {
+	return &ContactList{}
+}
 
 // GetContacts возращает список контактов
-func GetContacts() []Contact {
-	return contacts
+func (cl *ContactList) GetContacts() []Contact {
+	return cl.contacts
 }
 
 // AddContact добавляет контакт contact в конец списка и возращает id
-func AddContact(contact Contact) int {
-	id := len(contacts)
-	contacts = append(contacts, contact)
+func (cl *ContactList) AddContact(contact Contact) int {
+	id := len(cl.contacts)
+	cl.contacts = append(cl.contacts, contact)
 	return id
 }
 
 // EditContact изменяет контакт c id на contact
-func EditContact(contact Contact, id int) error {
-	if id < 0 || id >= len(contacts) {
+func (cl *ContactList) EditContact(contact Contact, id int) error {
+	if id < 0 || id >= len(cl.contacts) {
 		return fmt.Errorf("incorrect ID")
 	}
-	contacts[id] = contact
+	cl.contacts[id] = contact
 	return nil
 }
 
 // RemoveContact удаляет контакт по id
-func RemoveContact(id int) error {
-	if id < 0 || id >= len(contacts) {
+func (cl *ContactList) RemoveContact(id int) error {
+	if id < 0 || id >= len(cl.contacts) {
 		return fmt.Errorf("incorrect ID")
 	}
-	contacts = append(contacts[:id], contacts[id+1:]...)
+	cl.contacts = append(cl.contacts[:id], cl.contacts[id+1:]...)
 	return nil
 }
