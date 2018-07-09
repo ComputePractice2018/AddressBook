@@ -1,0 +1,17 @@
+matrix:
+  include:
+    - language: go
+      before_script:
+        - cd backend
+        - go get github.com/gorilla/mux
+      script:
+        - go test -v data
+        - go test -v server
+
+    - language: node_js
+      before_script:
+        - cd frontend
+        - npm install
+      script:
+        - npm run test:unit
+        - npm run lint
