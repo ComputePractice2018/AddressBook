@@ -5,8 +5,10 @@ matrix:
         - cd backend
         - go get github.com/gorilla/mux
       script:
-        - go test -v data
-        - go test -v server
+        - cd data
+        - go test -v 
+        - cd ..\test
+        - go test -v
 
     - language: node_js
       before_script:
