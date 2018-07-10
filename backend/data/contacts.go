@@ -56,9 +56,10 @@ func (cl *ContactList) EditContact(contact Contact, id int) error {
 
 // RemoveContact удаляет контакт по id
 func (cl *ContactList) RemoveContact(id int) error {
-	if id < 0 || id >= len(cl.contacts) {
+	if id < 1 || id > len(cl.contacts) {
 		return fmt.Errorf("incorrect ID")
 	}
+	id--
 	cl.contacts = append(cl.contacts[:id], cl.contacts[id+1:]...)
 	return nil
 }

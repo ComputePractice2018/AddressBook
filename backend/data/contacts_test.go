@@ -56,7 +56,7 @@ func TestRemoveContact(t *testing.T) {
 	cl.AddContact(testContacts[0])
 	cl.AddContact(testContacts[1])
 
-	err := cl.RemoveContact(0)
+	err := cl.RemoveContact(1)
 
 	if cl.GetContacts()[0] != testContacts[1] {
 		t.Errorf("RemoveContact is not working")

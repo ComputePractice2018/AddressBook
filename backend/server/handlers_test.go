@@ -42,7 +42,7 @@ func TestCrudHandlers(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("Expected 201 code (gotten: %d)", resp.StatusCode)
 	}
-	if resp.Header.Get("Location") != "/api/addressbook/contacts/0" {
+	if resp.Header.Get("Location") != "/api/addressbook/contacts/1" {
 		t.Error("Expected another location")
 	}
 
@@ -51,7 +51,7 @@ func TestCrudHandlers(t *testing.T) {
 	}
 
 	testData = strings.NewReader(testContact)
-	req, err = http.NewRequest("PUT", "/api/addressbook/contacts/0", testData)
+	req, err = http.NewRequest("PUT", "/api/addressbook/contacts/1", testData)
 
 	w = httptest.NewRecorder()
 	router.ServeHTTP(w, req)
@@ -60,7 +60,7 @@ func TestCrudHandlers(t *testing.T) {
 	if resp.StatusCode != http.StatusAccepted {
 		t.Errorf("Expected 201 code (gotten: %d)", resp.StatusCode)
 	}
-	if resp.Header.Get("Location") != "/api/addressbook/contacts/0" {
+	if resp.Header.Get("Location") != "/api/addressbook/contacts/1" {
 		t.Error("Expected another location")
 	}
 
@@ -68,7 +68,7 @@ func TestCrudHandlers(t *testing.T) {
 		t.Error("Expected old value")
 	}
 
-	req, err = http.NewRequest("DELETE", "/api/addressbook/contacts/0", nil)
+	req, err = http.NewRequest("DELETE", "/api/addressbook/contacts/1", nil)
 
 	w = httptest.NewRecorder()
 	router.ServeHTTP(w, req)
