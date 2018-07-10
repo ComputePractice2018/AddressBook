@@ -39,7 +39,7 @@ func (cl *ContactList) GetContacts() []Contact {
 
 // AddContact добавляет контакт contact в конец списка и возращает id
 func (cl *ContactList) AddContact(contact Contact) int {
-	id := len(cl.contacts)
+	id := len(cl.contacts) + 1
 	contact.ID = id
 	cl.contacts = append(cl.contacts, contact)
 	return id
@@ -47,10 +47,10 @@ func (cl *ContactList) AddContact(contact Contact) int {
 
 // EditContact изменяет контакт c id на contact
 func (cl *ContactList) EditContact(contact Contact, id int) error {
-	if id < 0 || id >= len(cl.contacts) {
+	if id < 1 || id > len(cl.contacts) {
 		return fmt.Errorf("incorrect ID")
 	}
-	cl.contacts[id] = contact
+	cl.contacts[id-1] = contact
 	return nil
 }
 
@@ -60,8 +60,5 @@ func (cl *ContactList) RemoveContact(id int) error {
 		return fmt.Errorf("incorrect ID")
 	}
 	cl.contacts = append(cl.contacts[:id], cl.contacts[id+1:]...)
-	for i, contact := range cl.contacts {
-		contact.ID = i
-	}
 	return nil
 }
