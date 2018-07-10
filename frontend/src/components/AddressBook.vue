@@ -1,38 +1,65 @@
 <template>
   <div class="addressbook">
-    <h1>{{ title }}</h1>
+    <b-jumbotron bg-variant="info" text-variant="white" border-variant="dark">
+      <template slot="header">
+        {{ title}}
+      </template>
+    </b-jumbotron>
 
     <h3 v-if="error">Ошибка: {{error}}</h3>
 
-    <table>
+    <table class="table">
+      <thead>
       <tr>
         <th>Имя</th>
         <th>Фамилия</th>
         <th>Телефон</th>
         <th>E-mail</th>
         <th>Github</th>
+        <th></th>
+        <th></th>
       </tr>
-      <tr v-for="contact in contact_list" v-bind:key="contact.phone">
+      </thead>
+      <tbody>
+      <tr v-for="contact in contact_list" v-bind:key="contact.id">
         <td>{{contact.name}}</td>
         <td>{{contact.surname}}</td>
         <td>{{contact.phone}}</td>
         <td>{{contact.email}}</td>
         <td>{{contact.github}}</td>
-        <td><button v-on:click="edit_contact(contact)">Редактировать контакт</button></td>
-        <td><button v-on:click="remove_contact(contact)">Удалить контакт</button></td>
+        <td><b-button variant="warning" v-on:click="edit_contact(contact)">Редактировать контакт</b-button></td>
+        <td><b-button variant="danger" v-on:click="remove_contact(contact)">Удалить контакт</b-button></td>
       </tr>
+      </tbody>
     </table>
 
-    <h3 v-if="edit_index == -1">Новый контакт</h3>
-    <form>
-      <p>Имя: <input type="text" v-model="new_contact.name"></p>
-      <p>Фамилия: <input type="text" v-model="new_contact.surname"></p>
-      <p>Телефон: <input type="text" v-model="new_contact.phone"></p>
-      <p>Email: <input type="text" v-model="new_contact.email"></p>
-      <p>Gihub: <input type="text" v-model="new_contact.github"></p>
-      <button v-if="edit_index == -1" v-on:click="add_new_contact">Добавить контакт</button>
-      <button v-if="edit_index > -1" v-on:click="end_of_edition">Закончить редактирование</button>
-    </form>
+    <b-card>
+    <b-form>
+      <h3 v-if="edit_index == -1">Новый контакт</h3>
+      <b-form-group label="Имя:">
+        <b-form-input v-model="new_contact.name" required>
+        </b-form-input>
+      </b-form-group>
+      <b-form-group label="Фамилия:">
+        <b-form-input v-model="new_contact.surname" required>
+        </b-form-input>
+      </b-form-group>
+      <b-form-group label="Телефон:">
+        <b-form-input v-model="new_contact.phone" required>
+        </b-form-input>
+      </b-form-group>
+      <b-form-group label="Email:">
+        <b-form-input v-model="new_contact.email" type="email" required>
+        </b-form-input>
+      </b-form-group>
+      <b-form-group label="Github:">
+        <b-form-input v-model="new_contact.github" required>
+        </b-form-input>
+      </b-form-group>
+      <b-button variant="success" v-if="edit_index == -1" v-on:click="add_new_contact">Добавить контакт</b-button>
+      <b-button variant="success" v-if="edit_index > -1" v-on:click="end_of_edition">Закончить редактирование</b-button>
+    </b-form>
+    </b-card>
   </div>
 </template>
 
@@ -51,6 +78,7 @@ export default {
       contact_list: [],
       new_contact:
         {
+          'id': 0,
           'name': '',
           'surname': '',
           'phone': '',
@@ -83,7 +111,7 @@ export default {
     },
     remove_contact: function (item) {
       this.error = ''
-      const url = '/api/addressbook/contacts/' + this.contact_list.indexOf(item)
+      const url = '/api/addressbook/contacts/' + item.id
       axios.delete(url).then(response => {
         this.contact_list.splice(this.contact_list.indexOf(item), 1)
       }).catch(response => {
@@ -96,10 +124,11 @@ export default {
     },
     end_of_edition: function () {
       this.error = ''
-      const url = '/api/addressbook/contacts/' + this.edit_index
+      const url = '/api/addressbook/contacts/' + this.new_contact.id
       axios.put(url, this.new_contact).then(response => {
         this.edit_index = -1
         this.new_contact = {
+          'id': 0,
           'name': '',
           'surname': '',
           'phone': '',
