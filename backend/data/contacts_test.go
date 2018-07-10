@@ -4,6 +4,7 @@ import "testing"
 
 var testContacts = []Contact{
 	{
+		ID:      1,
 		Name:    "Ivan",
 		Surname: "Ivanov",
 		Phone:   "+7999999999",
@@ -11,6 +12,7 @@ var testContacts = []Contact{
 		Github:  "iivanov",
 	},
 	{
+		ID:      2,
 		Name:    "Sergey",
 		Surname: "Sergeev",
 		Phone:   "+788888888",
@@ -33,13 +35,13 @@ func TestEditContact(t *testing.T) {
 	cl := NewContactList()
 	cl.AddContact(testContacts[0])
 
-	err := cl.EditContact(testContacts[1], 0)
+	err := cl.EditContact(testContacts[1], 1)
 
 	if cl.GetContacts()[0] != testContacts[1] {
 		t.Errorf("EditContact is not working")
 	}
 	if err != nil {
-		t.Errorf("Unexpected EditContact error")
+		t.Errorf("Unexpected EditContact error: %+v", err)
 	}
 
 	err = cl.EditContact(testContacts[1], -1)
@@ -54,7 +56,7 @@ func TestRemoveContact(t *testing.T) {
 	cl.AddContact(testContacts[0])
 	cl.AddContact(testContacts[1])
 
-	err := cl.RemoveContact(0)
+	err := cl.RemoveContact(1)
 
 	if cl.GetContacts()[0] != testContacts[1] {
 		t.Errorf("RemoveContact is not working")

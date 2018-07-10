@@ -6,6 +6,7 @@ import (
 
 // Contact структура для хранения записи адресной книги
 type Contact struct {
+	ID      int    `json:"id"`
 	Name    string `json:"name"`
 	Surname string `json:"surname"`
 	Phone   string `json:"phone"`
@@ -38,25 +39,27 @@ func (cl *ContactList) GetContacts() []Contact {
 
 // AddContact добавляет контакт contact в конец списка и возращает id
 func (cl *ContactList) AddContact(contact Contact) int {
-	id := len(cl.contacts)
+	id := len(cl.contacts) + 1
+	contact.ID = id
 	cl.contacts = append(cl.contacts, contact)
 	return id
 }
 
 // EditContact изменяет контакт c id на contact
 func (cl *ContactList) EditContact(contact Contact, id int) error {
-	if id < 0 || id >= len(cl.contacts) {
+	if id < 1 || id > len(cl.contacts) {
 		return fmt.Errorf("incorrect ID")
 	}
-	cl.contacts[id] = contact
+	cl.contacts[id-1] = contact
 	return nil
 }
 
 // RemoveContact удаляет контакт по id
 func (cl *ContactList) RemoveContact(id int) error {
-	if id < 0 || id >= len(cl.contacts) {
+	if id < 1 || id > len(cl.contacts) {
 		return fmt.Errorf("incorrect ID")
 	}
+	id--
 	cl.contacts = append(cl.contacts[:id], cl.contacts[id+1:]...)
 	return nil
 }
