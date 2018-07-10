@@ -19,5 +19,4 @@ matrix:
         - cd frontend
         - npm install
       script:
-        - npm run test:unit
         - npm run lint
